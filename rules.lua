@@ -1,23 +1,88 @@
 -- Load libraries
-local gears = require("gears")
 local awful = require("awful")
-local beautiful = require("beautiful")
+local ruled = require("ruled")
 
--- Load theme
-dofile(gears.filesystem.get_configuration_dir() .. "/theme.lua")
+-- Create a rules table
+local rules = ruled.clientrules
 
--- Load keybindings
-dofile(gears.filesystem.get_configuration_dir() .. "/keybindings.lua")
+-- Define client rules
+rules {
+    -- All clients will match this rule.
+    {
+        rule = {},
+        properties = {
+            focus = awful.client.focus.filter,
+            raise = true,
+            keys = keybindings,
+            buttons = clientbuttons,
+            screen = awful.screen.preferred,
+            placement = awful.placement.no_overlap + awful.placement.no_offscreen,
+            size_hints_honor = false
+        }
+    },
 
--- Load tags
-dofile(gears.filesystem.get_configuration_dir() .. "/tags.lua")
+    -- Floating clients
+    {
+        rule_any = {
+            instance = {
+                "popup",
+            },
+            class = {
+                "Pinentry",
+                "Arandr",
+                "Blueman-manager",
+                "Gpick",
+                "Kruler",
+                "Sxiv",
+                "Tor Browser",
+                "Wpa_gui",
+                "veromix",
+                "xtightvncviewer"
+            },
+            name = {
+                "Event Tester", -- xev.
+            },
+            role = {
+                "AlarmWindow",
+                "ConfigManager",
+                "pop-up",
+            }
+        },
+        properties = { floating = true }
+    },
 
--- Load wibar
-dofile(gears.filesystem.get_configuration_dir() .. "/wibar.lua")
+    -- Centered clients
+    {
+        rule_any = {
+            type = {
+                "dialog",
+            },
+            class = {
+                "Wicd-client.py",
+                "calendar.google.com"
+            },
+            name = {
+                "Steam Guard",
+            },
+            role = {
+                "GtkFileChooserDialog",
+                "conversation",
+            }
+        },
+        properties = { placement = awful.placement.centered }
+    },
 
--- Load client rules
-dofile(gears.filesystem.get_configuration_dir() .. "/rules.lua")
+    -- Fullscreen clients
+    {
+        rule_any = {
+            class = {
+                "Cairo-clock",
+                "mpv"
+            },
+        },
+        properties = { fullscreen = true }
+    }
+}
 
--- ... Other configurations ...
-
--- Rest of your rc.lua file
+-- Export the rules table
+return rules

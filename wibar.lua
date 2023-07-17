@@ -1,23 +1,60 @@
 -- Load libraries
 local gears = require("gears")
 local awful = require("awful")
-local beautiful = require("beautiful")
+local wibox = require("wibox")
 
--- Load theme
-dofile(gears.filesystem.get_configuration_dir() .. "/theme.lua")
+-- Define theme variables
+local theme = {}
 
--- Load keybindings
-dofile(gears.filesystem.get_configuration_dir() .. "/keybindings.lua")
+-- Wallpaper
+theme.wallpaper = "/path/to/wallpaper.jpg"
 
--- Load tags
-dofile(gears.filesystem.get_configuration_dir() .. "/tags.lua")
+-- Font
+theme.font = "sans 8"
 
--- Load wibar
-dofile(gears.filesystem.get_configuration_dir() .. "/wibar.lua")
+-- Colors
+theme.primary = "#3F51B5"
+theme.secondary = "#FF4081"
+theme.background = "#212121"
+theme.foreground = "#FFFFFF"
 
--- Load client rules
-dofile(gears.filesystem.get_configuration_dir() .. "/rules.lua")
+-- Wibar (Taskbar) settings
+theme.wibar = {}
+theme.wibar.height = 30
+theme.wibar.bg = theme.background
+theme.wibar.fg = theme.foreground
 
--- ... Other configurations ...
+-- Taglist settings
+theme.taglist = {}
+theme.taglist.font = theme.font
+theme.taglist.bg_empty = theme.background
+theme.taglist.fg_empty = theme.foreground
+theme.taglist.bg_occupied = theme.primary
+theme.taglist.fg_occupied = theme.foreground
+theme.taglist.bg_urgent = theme.secondary
+theme.taglist.fg_urgent = theme.foreground
 
--- Rest of your rc.lua file
+-- Tasklist settings
+theme.tasklist = {}
+theme.tasklist.font = theme.font
+theme.tasklist.bg_normal = theme.background
+theme.tasklist.fg_normal = theme.foreground
+theme.tasklist.bg_focus = theme.primary
+theme.tasklist.fg_focus = theme.foreground
+theme.tasklist.bg_urgent = theme.secondary
+theme.tasklist.fg_urgent = theme.foreground
+
+-- Prompt settings
+theme.prompt = {}
+theme.prompt.fg = theme.foreground
+theme.prompt.bg = theme.background
+
+-- Layout icons
+theme.layout_tile = "/path/to/tile.png"
+theme.layout_floating = "/path/to/floating.png"
+
+-- Apply theme
+beautiful.init(theme)
+
+-- Export the theme table
+return theme

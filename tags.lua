@@ -1,23 +1,18 @@
 -- Load libraries
-local gears = require("gears")
 local awful = require("awful")
-local beautiful = require("beautiful")
 
--- Load theme
-dofile(gears.filesystem.get_configuration_dir() .. "/theme.lua")
+-- Define tag names
+local tag_names = { "1", "2", "3", "4", "5", "6", "7", "8", "9" }
 
--- Load keybindings
-dofile(gears.filesystem.get_configuration_dir() .. "/keybindings.lua")
+-- Define layouts
+local layouts = {
+    awful.layout.suit.tile,
+    awful.layout.suit.floating,
+    -- Add more layouts here
+}
 
--- Load tags
-dofile(gears.filesystem.get_configuration_dir() .. "/tags.lua")
-
--- Load wibar
-dofile(gears.filesystem.get_configuration_dir() .. "/wibar.lua")
-
--- Load client rules
-dofile(gears.filesystem.get_configuration_dir() .. "/rules.lua")
-
--- ... Other configurations ...
-
--- Rest of your rc.lua file
+-- Create tags
+awful.screen.connect_for_each_screen(function(s)
+    -- Each screen has its own tag table.
+    awful.tag(tag_names, s, layouts[1])
+end)
